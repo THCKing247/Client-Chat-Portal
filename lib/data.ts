@@ -8,115 +8,132 @@ let chatbots: Chatbot[] = [];
 let sessions: MessageSession[] = [];
 
 // Initialize with sample data
+let initializing = false;
+let initPromise: Promise<void> | null = null;
+
 async function initializeData() {
   if (users.length > 0) return; // Already initialized
+  if (initializing && initPromise) return initPromise; // Wait for ongoing initialization
+  
+  initializing = true;
+  initPromise = (async () => {
+    try {
+      // Create sample clients
+      const client1: Client = {
+        id: 'client-1',
+        name: 'Acme Corporation',
+        createdAt: new Date().toISOString(),
+      };
+      const client2: Client = {
+        id: 'client-2',
+        name: 'Tech Solutions Inc',
+        createdAt: new Date().toISOString(),
+      };
+      clients = [client1, client2];
 
-  // Create sample clients
-  const client1: Client = {
-    id: 'client-1',
-    name: 'Acme Corporation',
-    createdAt: new Date().toISOString(),
-  };
-  const client2: Client = {
-    id: 'client-2',
-    name: 'Tech Solutions Inc',
-    createdAt: new Date().toISOString(),
-  };
-  clients = [client1, client2];
+      // Create sample users
+      const hyperUser: User = {
+        id: 'user-hyper',
+        email: 'hyper@example.com',
+        password: await hashPassword('password123'),
+        name: 'Hyper Admin',
+        role: 'hyper',
+        createdAt: new Date().toISOString(),
+      };
 
-  // Create sample users
-  const hyperUser: User = {
-    id: 'user-hyper',
-    email: 'hyper@example.com',
-    password: await hashPassword('password123'),
-    name: 'Hyper Admin',
-    role: 'hyper',
-    createdAt: new Date().toISOString(),
-  };
+      const clientAdmin: User = {
+        id: 'user-client-admin',
+        email: 'client@example.com',
+        password: await hashPassword('password123'),
+        name: 'Client Admin',
+        role: 'client_admin',
+        clientId: 'client-1',
+        createdAt: new Date().toISOString(),
+      };
 
-  const clientAdmin: User = {
-    id: 'user-client-admin',
-    email: 'client@example.com',
-    password: await hashPassword('password123'),
-    name: 'Client Admin',
-    role: 'client_admin',
-    clientId: 'client-1',
-    createdAt: new Date().toISOString(),
-  };
-
-  const regularUser: User = {
-    id: 'user-regular',
-    email: 'user@example.com',
-    password: await hashPassword('password123'),
-    name: 'Regular User',
-    role: 'user',
-    clientId: 'client-1',
-    createdAt: new Date().toISOString(),
-  };
-
-  users = [hyperUser, clientAdmin, regularUser];
-
-  // Create sample chatbots
-  const chatbot1: Chatbot = {
-    id: 'bot-1',
-    clientId: 'client-1',
-    name: 'Main Website Chatbot',
-    siteUrl: 'https://acme.com',
-    businessName: 'Acme Corporation',
-    settings: {
-      welcomeMessage: 'Hello! How can I help you today?',
-      responseStyle: 'professional',
-      maxTokens: 1000,
-      temperature: 0.7,
-      enabled: true,
-      customInstructions: 'Be helpful and professional',
-    },
-    createdAt: new Date().toISOString(),
-  };
-
-  const chatbot2: Chatbot = {
-    id: 'bot-2',
-    clientId: 'client-1',
-    name: 'Support Chatbot',
-    siteUrl: 'https://support.acme.com',
-    businessName: 'Acme Support',
-    settings: {
-      welcomeMessage: 'Hi! I\'m here to help with support questions.',
-      responseStyle: 'friendly',
-      maxTokens: 800,
-      temperature: 0.8,
-      enabled: true,
-    },
-    createdAt: new Date().toISOString(),
-  };
-
-  chatbots = [chatbot1, chatbot2];
-
-  // Create sample sessions
-  const session1: MessageSession = {
-    id: 'session-1',
-    chatbotId: 'bot-1',
-    clientId: 'client-1',
-    messages: [
-      {
-        id: 'msg-1',
+      const regularUser: User = {
+        id: 'user-regular',
+        email: 'user@example.com',
+        password: await hashPassword('password123'),
+        name: 'Regular User',
         role: 'user',
-        content: 'Hello, I need help with my order',
-        timestamp: new Date(Date.now() - 3600000).toISOString(),
-      },
-      {
-        id: 'msg-2',
-        role: 'assistant',
-        content: 'I\'d be happy to help you with your order. Can you provide your order number?',
-        timestamp: new Date(Date.now() - 3590000).toISOString(),
-      },
-    ],
-    startedAt: new Date(Date.now() - 3600000).toISOString(),
-    endedAt: new Date(Date.now() - 3000000).toISOString(),
-    status: 'completed',
-  };
+        clientId: 'client-1',
+        createdAt: new Date().toISOString(),
+      };
 
-  sessions = [session1];
+      users = [hyperUser, clientAdmin, regularUser];
+
+      // Create sample chatbots
+      const chatbot1: Chatbot = {
+        id: 'bot-1',
+        clientId: 'client-1',
+        name: 'Main Website Chatbot',
+        siteUrl: 'https://acme.com',
+        businessName: 'Acme Corporation',
+        settings: {
+          welcomeMessage: 'Hello! How can I help you today?',
+          responseStyle: 'professional',
+          maxTokens: 1000,
+          temperature: 0.7,
+          enabled: true,
+          customInstructions: 'Be helpful and professional',
+        },
+        createdAt: new Date().toISOString(),
+      };
+
+      const chatbot2: Chatbot = {
+        id: 'bot-2',
+        clientId: 'client-1',
+        name: 'Support Chatbot',
+        siteUrl: 'https://support.acme.com',
+        businessName: 'Acme Support',
+        settings: {
+          welcomeMessage: 'Hi! I\'m here to help with support questions.',
+          responseStyle: 'friendly',
+          maxTokens: 800,
+          temperature: 0.8,
+          enabled: true,
+        },
+        createdAt: new Date().toISOString(),
+      };
+
+      chatbots = [chatbot1, chatbot2];
+
+      // Create sample sessions
+      const session1: MessageSession = {
+        id: 'session-1',
+        chatbotId: 'bot-1',
+        clientId: 'client-1',
+        messages: [
+          {
+            id: 'msg-1',
+            role: 'user',
+            content: 'Hello, I need help with my order',
+            timestamp: new Date(Date.now() - 3600000).toISOString(),
+          },
+          {
+            id: 'msg-2',
+            role: 'assistant',
+            content: 'I\'d be happy to help you with your order. Can you provide your order number?',
+            timestamp: new Date(Date.now() - 3590000).toISOString(),
+          },
+        ],
+        startedAt: new Date(Date.now() - 3600000).toISOString(),
+        endedAt: new Date(Date.now() - 3000000).toISOString(),
+        status: 'completed',
+      };
+
+      sessions = [session1];
+    } catch (error) {
+      console.error('Data initialization error:', error);
+      throw error;
+    } finally {
+      initializing = false;
+      initPromise = null;
+    }
+  })();
+  
+  return initPromise;
 }
 
 // User operations

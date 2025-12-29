@@ -17,7 +17,8 @@ export async function GET(request: NextRequest) {
     const clients = await getAllClients();
     return NextResponse.json({ clients });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Get clients error:', error);
+    return NextResponse.json({ error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 });
   }
 }
 
@@ -41,7 +42,8 @@ export async function POST(request: NextRequest) {
     const client = await createClient(name);
     return NextResponse.json({ client }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Create client error:', error);
+    return NextResponse.json({ error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 });
   }
 }
 
