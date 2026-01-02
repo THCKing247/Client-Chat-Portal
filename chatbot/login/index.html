@@ -216,7 +216,7 @@
   </div>
 
   <!-- Load Supabase client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="/assets/site.js" defer></script>
   <script>
     // Chatbot Login Configuration
@@ -235,6 +235,13 @@
       if (!CHATBOT_CONFIG.supabaseUrl || !CHATBOT_CONFIG.supabaseAnonKey) {
         console.error('Supabase configuration missing. Please set CHATBOT_SUPABASE_URL and CHATBOT_SUPABASE_ANON_KEY.');
         showError('login-error', 'Configuration error: Supabase credentials not set.');
+        return false;
+      }
+
+      // Check if Supabase library is loaded
+      if (typeof supabase === 'undefined') {
+        console.error('Supabase library not loaded. Check if CDN script loaded correctly.');
+        showError('login-error', 'Authentication library failed to load. Please refresh the page.');
         return false;
       }
 
