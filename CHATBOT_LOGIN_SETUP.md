@@ -4,7 +4,7 @@ The chatbot login portal has been integrated into the main site's client portal.
 
 ## Configuration
 
-The chatbot login page requires Supabase credentials to be configured. You can set these in one of two ways:
+The chatbot login page requires Supabase credentials and the chatbot portal URL to be configured. You can set these in one of two ways:
 
 ### Option 1: Global Configuration (Recommended)
 
@@ -16,9 +16,25 @@ Add the following script to your main `index.html` or create a configuration fil
   window.CHATBOT_SUPABASE_URL = 'https://your-project.supabase.co';
   window.CHATBOT_SUPABASE_ANON_KEY = 'your-anon-key-here';
   window.CHATBOT_API_URL = 'http://localhost:8080'; // or your production API URL
-  window.CHATBOT_REDIRECT_URL = 'https://chatbot.apextsgroup.com'; // Where to redirect after login
+  // IMPORTANT: Set this to where your Next.js chatbot portal is deployed
+  // Local development: 'http://localhost:3000'
+  // Production: 'https://chatbot.apextsgroup.com' or your deployment URL
+  window.CHATBOT_REDIRECT_URL = 'http://localhost:3000'; // Where to redirect after login
 </script>
 ```
+
+### Important: Chatbot Portal Deployment
+
+The chatbot portal is a Next.js application located in `apex-chatbot/portal/`. You need to deploy it separately:
+
+1. **Local Development**: Run `npm run dev` in `apex-chatbot/portal/` - it will be available at `http://localhost:3000`
+2. **Production Deployment**: Deploy to Vercel, Netlify, or your preferred hosting:
+   - The portal needs to be accessible at the URL you set in `CHATBOT_REDIRECT_URL`
+   - Make sure the domain (e.g., `chatbot.apextsgroup.com`) is properly configured
+   - Set environment variables in your deployment platform:
+     - `NEXT_PUBLIC_SUPABASE_URL`
+     - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+     - `NEXT_PUBLIC_API_URL`
 
 ### Option 2: Environment Variables (For Server-Side)
 
@@ -83,5 +99,15 @@ Ensure your API server is running and accessible at the configured `CHATBOT_API_
 
 ### Redirect issues
 
-Verify that `CHATBOT_REDIRECT_URL` points to your chatbot portal (e.g., `https://chatbot.apextsgroup.com`).
+Verify that `CHATBOT_REDIRECT_URL` points to your chatbot portal:
+- **Local**: `http://localhost:3000` (make sure the Next.js dev server is running)
+- **Production**: Your deployed portal URL (e.g., `https://chatbot.apextsgroup.com`)
+
+### 404 Error for chatbot portal
+
+If you see a 404 when redirecting to the chatbot portal:
+1. **Check if the portal is running**: For local development, run `npm run dev` in `apex-chatbot/portal/`
+2. **Check deployment**: If using production, verify the portal is deployed and accessible
+3. **Update redirect URL**: Make sure `CHATBOT_REDIRECT_URL` matches your actual portal URL
+4. **Domain configuration**: If using a custom domain, ensure DNS is properly configured
 

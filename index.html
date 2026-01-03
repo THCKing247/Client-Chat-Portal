@@ -5,38 +5,25 @@
      crossorigin="anonymous"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Apex Technical Solutions Group LLC</title>
-  <meta name="description" content="Apex Technical Solutions Group LLC builds modern websites, custom web applications, and automation solutions." />
-  <link rel="canonical" href="https://apextsgroup.com/" />
-
-  <!-- Open Graph / Facebook -->
+  <title>AI Chatbot Login | Client Portal | Apex Technical Solutions Group LLC</title>
+  <meta name="description" content="Login to access your AI Chatbot portal and manage your chatbot configuration." />
+  <link rel="canonical" href="https://apextsgroup.com/chatbot/login/" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://apextsgroup.com/" />
-  <meta property="og:title" content="Apex Technical Solutions Group LLC" />
-  <meta property="og:description" content="We build modern websites, workflow automation, and custom web apps with clean execution and production-ready delivery." />
+  <meta property="og:url" content="https://apextsgroup.com/chatbot/login/" />
+  <meta property="og:title" content="AI Chatbot Login | Client Portal | Apex Technical Solutions Group LLC" />
+  <meta property="og:description" content="Login to access your AI Chatbot portal." />
   <meta property="og:image" content="https://apextsgroup.com/assets/logo.png" />
-
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://apextsgroup.com/" />
-  <meta property="twitter:title" content="Apex Technical Solutions Group LLC" />
-  <meta property="twitter:description" content="We build modern websites, workflow automation, and custom web apps with clean execution and production-ready delivery." />
-  <meta property="twitter:image" content="https://apextsgroup.com/assets/logo.png" />
-
-  <!-- Favicon -->
+  <meta property="twitter:card" content="summary" />
+  <meta property="twitter:title" content="AI Chatbot Login | Client Portal | Apex Technical Solutions Group LLC" />
+  <meta property="twitter:description" content="Login to access your AI Chatbot portal." />
   <link rel="icon" type="image/png" href="/assets/logo.png" />
-
-  <!-- Main site styles -->
   <link rel="stylesheet" href="/assets/site.css">
 </head>
 
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="bg-animated" aria-hidden="true">
-    <span class="blob b1"></span>
-    <span class="blob b2"></span>
-    <span class="blob b3"></span>
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
     <canvas id="particles"></canvas>
   </div>
 
@@ -46,293 +33,541 @@
         <img class="brand-logo" src="/assets/logo.png" alt="Apex Technical Solutions Group LLC logo" loading="lazy">
         <span class="brand-name">Apex Technical Solutions Group LLC</span>
       </a>
-
       <nav class="nav" id="mainNav">
         <a href="/">Home</a>
         <a href="/services/">Services</a>
         <a href="/about/">About</a>
         <a href="/resources/">Resources</a>
         <a href="/contact/">Contact</a>
+        <a href="/dashboard/">Dashboard</a>
       </nav>
       <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">☰</button>
     </header>
 
     <main id="main-content">
-      <section class="hero reveal">
-        <div class="kicker">Web • Automation • Custom Apps</div>
-        <h1>Ship faster. Automate more. Scale confidently.</h1>
-        <p class="lead">
-          We build modern websites, workflow automation, and custom web apps with clean execution and production-ready delivery.
-        </p>
+      <nav class="breadcrumbs reveal" aria-label="Breadcrumb">
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px;">
+          <li><a href="/">Home</a></li>
+          <li><a href="/dashboard/">Dashboard</a></li>
+          <li class="current">AI Chatbot Login</li>
+        </ul>
+      </nav>
 
-        <div class="btns">
-          <a class="btn primary" href="/contact/">Request a Quote</a>
-          <a class="btn" href="/services/">View Services</a>
-          <a class="btn" href="mailto:info@apextsgroup.com?subject=Project%20Inquiry">Email Us</a>
-        </div>
+      <section class="reveal" style="max-width:500px;margin:48px auto;">
+        <div class="card" style="padding:40px;">
+          <div style="text-align:center;margin-bottom:32px;">
+            <div style="font-size:64px;margin-bottom:16px;">🤖</div>
+            <h1 style="margin:0 0 8px;font-size:32px;letter-spacing:-.5px;">AI Chatbot Portal</h1>
+            <p style="margin:0;color:var(--muted);font-size:16px;">Login to access your chatbot configuration and settings.</p>
+          </div>
 
-        <div class="hero-metrics">
-          <div class="metric reveal">
-            <div class="metric-title">Build Style</div>
-            <div class="metric-value">Modern + Maintainable</div>
+          <!-- Login Form -->
+          <div id="login-form-container">
+            <form id="login-form" onsubmit="handleLogin(event); return false;">
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  required 
+                  autocomplete="email"
+                  placeholder="your@email.com"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                  type="password" 
+                  id="password" 
+                  name="password" 
+                  required 
+                  autocomplete="current-password"
+                  placeholder="Enter your password"
+                />
+              </div>
+
+              <div id="login-error" class="error-message" style="display:none;margin-bottom:16px;"></div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn primary" id="login-submit" style="width:100%;">
+                  <span id="login-submit-text">Sign In</span>
+                  <span id="login-submit-loading" style="display:none;">Signing in...</span>
+                </button>
+              </div>
+
+              <div style="text-align:center;margin-top:16px;">
+                <button type="button" class="btn-link" onclick="showForgotPassword()" style="color:var(--accent);text-decoration:none;background:none;border:none;cursor:pointer;font-size:14px;">
+                  Forgot your password?
+                </button>
+              </div>
+            </form>
           </div>
-          <div class="metric reveal">
-            <div class="metric-title">Delivery</div>
-            <div class="metric-value">Milestones & Iteration</div>
+
+          <!-- Password Reset Form (Required) -->
+          <div id="password-reset-container" style="display:none;">
+            <div style="margin-bottom:24px;padding:16px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);border-radius:8px;">
+              <p style="margin:0;color:var(--text);font-size:14px;">
+                <strong>Password Reset Required</strong><br>
+                You must reset your password before continuing.
+              </p>
+            </div>
+
+            <form id="password-reset-form" onsubmit="handlePasswordReset(event); return false;">
+              <div class="form-group">
+                <label for="new-password">New Password</label>
+                <input 
+                  type="password" 
+                  id="new-password" 
+                  name="new-password" 
+                  required 
+                  minlength="6"
+                  autocomplete="new-password"
+                  placeholder="Enter new password (min. 6 characters)"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input 
+                  type="password" 
+                  id="confirm-password" 
+                  name="confirm-password" 
+                  required 
+                  minlength="6"
+                  autocomplete="new-password"
+                  placeholder="Confirm new password"
+                />
+              </div>
+
+              <div id="reset-error" class="error-message" style="display:none;margin-bottom:16px;"></div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn primary" id="reset-submit" style="width:100%;">
+                  <span id="reset-submit-text">Reset Password</span>
+                  <span id="reset-submit-loading" style="display:none;">Resetting...</span>
+                </button>
+              </div>
+
+              <div style="text-align:center;margin-top:16px;">
+                <button type="button" class="btn-link" onclick="cancelPasswordReset()" style="color:var(--muted);text-decoration:none;background:none;border:none;cursor:pointer;font-size:14px;">
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
-          <div class="metric reveal">
-            <div class="metric-title">Focus</div>
-            <div class="metric-value">Performance & Clarity</div>
+
+          <!-- Forgot Password Form -->
+          <div id="forgot-password-container" style="display:none;">
+            <div style="margin-bottom:24px;">
+              <p style="margin:0;color:var(--text);font-size:14px;">
+                Enter your email address and we'll send you a password reset link.
+              </p>
+            </div>
+
+            <form id="forgot-password-form" onsubmit="handleForgotPassword(event); return false;">
+              <div class="form-group">
+                <label for="forgot-email">Email Address</label>
+                <input 
+                  type="email" 
+                  id="forgot-email" 
+                  name="forgot-email" 
+                  required 
+                  autocomplete="email"
+                  placeholder="your@email.com"
+                />
+              </div>
+
+              <div id="forgot-error" class="error-message" style="display:none;margin-bottom:16px;"></div>
+              <div id="forgot-success" class="success-message" style="display:none;margin-bottom:16px;"></div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn primary" id="forgot-submit" style="width:100%;">
+                  <span id="forgot-submit-text">Send Reset Link</span>
+                  <span id="forgot-submit-loading" style="display:none;">Sending...</span>
+                </button>
+              </div>
+
+              <div style="text-align:center;margin-top:16px;">
+                <button type="button" class="btn-link" onclick="hideForgotPassword()" style="color:var(--muted);text-decoration:none;background:none;border:none;cursor:pointer;font-size:14px;">
+                  Back to Login
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Success/Redirect Message -->
+          <div id="success-container" style="display:none;text-align:center;padding:24px;">
+            <div style="font-size:48px;margin-bottom:16px;">✅</div>
+            <p style="margin:0;color:var(--text);font-size:16px;">
+              Login successful! Redirecting...
+            </p>
+          </div>
+
+          <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);text-align:center;">
+            <a href="/dashboard/" class="btn-link" style="color:var(--muted);text-decoration:none;font-size:14px;">
+              ← Back to Dashboard
+            </a>
           </div>
         </div>
       </section>
-
-      <section class="section reveal">
-        <div class="section-head">
-          <h2>What we build</h2>
-          <p>Production-ready solutions built for speed, reliability, and growth.</p>
-        </div>
-
-        <div class="grid">
-          <div class="card reveal">
-            <div class="icon">⚡</div>
-            <h3>Custom Web Applications</h3>
-            <p>Portals, dashboards, internal tools, and secure logins that fit your workflow.</p>
-            <ul>
-              <li>Roles & permissions</li>
-              <li>Admin panels & analytics</li>
-              <li>APIs & integrations</li>
-            </ul>
-          </div>
-
-          <div class="card reveal">
-            <div class="icon">🔁</div>
-            <h3>Automation & Integrations</h3>
-            <p>Reduce manual work by connecting tools and automating repeatable processes.</p>
-            <ul>
-              <li>Webhook and API automation</li>
-              <li>Notifications & scheduled jobs</li>
-              <li>Data sync & reporting</li>
-            </ul>
-          </div>
-
-          <div class="card reveal">
-            <div class="icon">🧩</div>
-            <h3>Websites & Landing Pages</h3>
-            <p>Fast, modern sites with clean messaging and conversion-focused structure.</p>
-            <ul>
-              <li>Business sites & funnels</li>
-              <li>Performance improvements</li>
-              <li>SEO foundations</li>
-            </ul>
-          </div>
-
-          <div class="card reveal">
-            <div class="icon">🛡️</div>
-            <h3>Technical Consulting</h3>
-            <p>Clear scoping, architecture guidance, and roadmap planning to avoid wasted spend.</p>
-            <ul>
-              <li>MVP → v1 planning</li>
-              <li>Tooling recommendations</li>
-              <li>Risk & complexity reduction</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section reveal">
-        <div class="section-head">
-          <h2>How we work</h2>
-          <p>A simple process that keeps delivery predictable.</p>
-        </div>
-
-        <div class="timeline">
-          <div class="step reveal">
-            <div class="step-num">01</div>
-            <div>
-              <h3>Discovery</h3>
-              <p>Clarify goals, users, requirements, and constraints.</p>
-            </div>
-          </div>
-
-          <div class="step reveal">
-            <div class="step-num">02</div>
-            <div>
-              <h3>Build</h3>
-              <p>Deliver in milestones with quick feedback loops.</p>
-            </div>
-          </div>
-
-          <div class="step reveal">
-            <div class="step-num">03</div>
-            <div>
-              <h3>Launch</h3>
-              <p>Go live with performance, security, and usability checks.</p>
-            </div>
-          </div>
-
-          <div class="step reveal">
-            <div class="step-num">04</div>
-            <div>
-              <h3>Support</h3>
-              <p>Updates, enhancements, and continuous improvement.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="cta2 reveal">
-        <div>
-          <h2>Ready to build?</h2>
-          <p>Send a short message with what you want to build and your timeline.</p>
-        </div>
-        <div class="btns">
-          <a class="btn primary" href="/contact/">Contact</a>
-          <a class="btn" href="mailto:info@apextsgroup.com?subject=Project%20Inquiry">Email Us</a>
-        </div>
-      </section>
-
-      <footer class="reveal">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h3>Apex Technical Solutions Group LLC</h3>
-            <p>Building modern technology solutions for businesses that scale.</p>
-          </div>
-          <div class="footer-section">
-            <h4>Quick Links</h4>
-            <nav class="footer-nav">
-              <a href="/">Home</a>
-              <a href="/services/">Services</a>
-              <a href="/about/">About</a>
-            </nav>
-          </div>
-          <div class="footer-section">
-            <h4>Resources</h4>
-            <nav class="footer-nav">
-              <a href="/process/">Process</a>
-              <a href="/pricing/">Pricing</a>
-              <a href="/contact/">Contact</a>
-            </nav>
-          </div>
-          <div class="footer-section">
-            <h4>More</h4>
-            <nav class="footer-nav">
-              <a href="/faq/">FAQ</a>
-              <a href="/blog/">Blog</a>
-              <a href="/resources/">Resources</a>
-              <a href="/privacy/">Privacy</a>
-            </nav>
-          </div>
-          <div class="footer-section">
-            <h4>Contact</h4>
-            <p><a href="mailto:info@apextsgroup.com">info@apextsgroup.com</a></p>
-          </div>
-        </div>
-        <div class="newsletter-signup" style="margin-top:48px;">
-          <h3>Stay Updated</h3>
-          <p>Get the latest insights on web development, automation, and technology trends.</p>
-          <form class="newsletter-form">
-            <input type="email" placeholder="Enter your email" required aria-label="Email address">
-            <button type="submit">Subscribe</button>
-          </form>
-        </div>
-        <div class="footer-bottom">
-          <div>© 2025 Apex Technical Solutions Group LLC. All rights reserved.</div>
-        </div>
-      </footer>
-      
-      <!-- Chatbot Widget -->
-      <div class="chatbot-widget" id="chatbotWidget" role="dialog" aria-labelledby="chatbot-name" aria-modal="true" aria-hidden="true">
-        <div class="chatbot-header" id="chatbotHeader">
-          <div class="chatbot-header-content">
-            <div class="chatbot-avatar" aria-hidden="true">🤖</div>
-            <div>
-              <div class="chatbot-name" id="chatbot-name">Apex Assistant</div>
-              <div class="chatbot-status" id="chatbot-status" aria-live="polite" aria-atomic="true">Online</div>
-            </div>
-          </div>
-          <button class="chatbot-close" id="chatbotClose" aria-label="Close chat">×</button>
-        </div>
-        <div class="chatbot-messages" id="chatbotMessages" role="log" aria-live="polite" aria-atomic="false" aria-label="Chat messages">
-          <div class="chatbot-message bot-message">
-            <div class="message-content">
-              <p>Hi! I'm here to help you with any questions about our services, pricing, or how we can help your business. What would you like to know?</p>
-            </div>
-          </div>
-        </div>
-        <div class="chatbot-quick-replies" id="chatbotQuickReplies" role="group" aria-label="Quick reply options">
-          <button class="quick-reply-btn" data-question="What services do you offer?" aria-label="Ask about services">Services</button>
-          <button class="quick-reply-btn" data-question="How much do projects cost?" aria-label="Ask about pricing">Pricing</button>
-          <button class="quick-reply-btn" data-question="How long do projects take?" aria-label="Ask about timeline">Timeline</button>
-          <button class="quick-reply-btn" data-question="How can I contact you?" aria-label="Ask about contact">Contact</button>
-        </div>
-        <div class="chatbot-input-container">
-          <label for="chatbotInput" class="sr-only">Type your message</label>
-          <input 
-            type="text" 
-            class="chatbot-input" 
-            id="chatbotInput" 
-            placeholder="Type your question..."
-            aria-label="Chat input"
-            aria-describedby="chatbot-status"
-          >
-          <button class="chatbot-send" id="chatbotSend" aria-label="Send message">➤</button>
-        </div>
-      </div>
-      <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open chat" aria-expanded="false" aria-controls="chatbotWidget">
-        <span class="chatbot-toggle-icon" aria-hidden="true">💬</span>
-        <span class="chatbot-toggle-text">Need Help?</span>
-      </button>
-      
-      <!-- Cookie Consent -->
-      <div class="cookie-consent">
-        <div class="cookie-consent-content">
-          <div class="cookie-consent-text">
-            <p>We use cookies to enhance your browsing experience and analyze site traffic. By continuing to use this site, you consent to our use of cookies.</p>
-          </div>
-          <div class="cookie-consent-buttons">
-            <button class="cookie-consent-btn accept" onclick="acceptCookies()">Accept</button>
-            <button class="cookie-consent-btn decline" onclick="declineCookies()">Decline</button>
-          </div>
-        </div>
-      </div>
     </main>
   </div>
 
-  <!-- Site JS -->
+  <!-- Load Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="/assets/site.js" defer></script>
-
-  <!-- Analytics - Add your tracking code here -->
-  <!-- Example: Google Analytics -->
-  <!--
-  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'GA_MEASUREMENT_ID');
-  </script>
-  -->
+    // Chatbot Login Configuration
+    // These should be set via environment variables or configuration
+    const CHATBOT_CONFIG = {
+      supabaseUrl: window.CHATBOT_SUPABASE_URL || 'https://your-project.supabase.co',
+      supabaseAnonKey: window.CHATBOT_SUPABASE_ANON_KEY || 'your-anon-key',
+      apiUrl: window.CHATBOT_API_URL || 'http://localhost:8080',
+      // Update this to your actual chatbot portal URL
+      // If running locally: 'http://localhost:3000'
+      // If deployed: 'https://chatbot.apextsgroup.com' or your deployment URL
+      redirectUrl: window.CHATBOT_REDIRECT_URL || 'http://localhost:3000'
+    };
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Apex Technical Solutions Group LLC",
-    "url": "https://apextsgroup.com",
-    "logo": "https://apextsgroup.com/assets/logo.png",
-    "description": "We build modern websites, workflow automation, and custom web apps with clean execution and production-ready delivery.",
-    "email": "info@apextsgroup.com",
-    "sameAs": [],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "info@apextsgroup.com",
-      "contactType": "Customer Service"
-    },
-    "areaServed": "Worldwide",
-    "serviceType": ["Web Development", "Custom Web Applications", "Automation", "Integration", "Consulting"]
-  }
+    let supabaseClient = null;
+
+    // Initialize Supabase client
+    function initSupabase() {
+      if (!CHATBOT_CONFIG.supabaseUrl || !CHATBOT_CONFIG.supabaseAnonKey) {
+        console.error('Supabase configuration missing. Please set CHATBOT_SUPABASE_URL and CHATBOT_SUPABASE_ANON_KEY.');
+        showError('login-error', 'Configuration error: Supabase credentials not set.');
+        return false;
+      }
+
+      // Check if Supabase library is loaded
+      if (typeof supabase === 'undefined') {
+        console.error('Supabase library not loaded. Check if CDN script loaded correctly.');
+        showError('login-error', 'Authentication library failed to load. Please refresh the page.');
+        return false;
+      }
+
+      try {
+        supabaseClient = supabase.createClient(CHATBOT_CONFIG.supabaseUrl, CHATBOT_CONFIG.supabaseAnonKey);
+        return true;
+      } catch (error) {
+        console.error('Failed to initialize Supabase:', error);
+        showError('login-error', 'Failed to initialize authentication system.');
+        return false;
+      }
+    }
+
+    // Check for existing session on page load
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!initSupabase()) return;
+
+      try {
+        const { data: { session }, error } = await supabaseClient.auth.getSession();
+        
+        if (session && session.user) {
+          // Check if password reset is required
+          const userMetadata = session.user.user_metadata || {};
+          const justResetPassword = sessionStorage.getItem("password_reset_in_progress") === "true";
+          
+          if (userMetadata.must_reset_password === true && !justResetPassword) {
+            showPasswordResetForm();
+          } else {
+            // Already logged in, redirect to chatbot portal
+            redirectToChatbot();
+          }
+        }
+      } catch (error) {
+        console.error('Session check error:', error);
+      }
+
+      // Listen for auth state changes
+      supabaseClient.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+          const userMetadata = session.user.user_metadata || {};
+          const justResetPassword = sessionStorage.getItem("password_reset_in_progress") === "true";
+          
+          if (userMetadata.must_reset_password === true && !justResetPassword) {
+            showPasswordResetForm();
+          } else {
+            redirectToChatbot();
+          }
+        } else if (event === 'SIGNED_OUT') {
+          showLoginForm();
+        }
+      });
+    });
+
+    // Handle login
+    async function handleLogin(e) {
+      e.preventDefault();
+      
+      if (!supabaseClient) {
+        showError('login-error', 'Authentication system not initialized.');
+        return;
+      }
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const submitBtn = document.getElementById('login-submit');
+      const submitText = document.getElementById('login-submit-text');
+      const submitLoading = document.getElementById('login-submit-loading');
+      const errorDiv = document.getElementById('login-error');
+
+      // Hide previous errors
+      errorDiv.style.display = 'none';
+      errorDiv.textContent = '';
+
+      // Show loading state
+      submitBtn.disabled = true;
+      submitText.style.display = 'none';
+      submitLoading.style.display = 'inline';
+
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (error) {
+          showError('login-error', error.message);
+          submitBtn.disabled = false;
+          submitText.style.display = 'inline';
+          submitLoading.style.display = 'none';
+          return;
+        }
+
+        if (data.user) {
+          // Refresh user data to get latest metadata
+          const { data: { user: refreshedUser } } = await supabaseClient.auth.getUser();
+          const currentUser = refreshedUser || data.user;
+          
+          // Check if account is locked
+          const userMetadata = currentUser.user_metadata || {};
+          if (userMetadata.account_locked === true) {
+            await supabaseClient.auth.signOut();
+            showError('login-error', 'Your account has been locked. Please contact your account administrator.');
+            submitBtn.disabled = false;
+            submitText.style.display = 'inline';
+            submitLoading.style.display = 'none';
+            return;
+          }
+
+          // Check if password reset is required
+          if (userMetadata.must_reset_password === true) {
+            sessionStorage.removeItem("password_reset_in_progress");
+            showPasswordResetForm();
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            submitBtn.disabled = false;
+            submitText.style.display = 'inline';
+            submitLoading.style.display = 'none';
+            return;
+          }
+
+          // Login successful - redirect
+          redirectToChatbot();
+        }
+      } catch (error) {
+        showError('login-error', error.message || 'An error occurred during login.');
+        submitBtn.disabled = false;
+        submitText.style.display = 'inline';
+        submitLoading.style.display = 'none';
+      }
+    }
+
+    // Handle password reset
+    async function handlePasswordReset(e) {
+      e.preventDefault();
+      
+      if (!supabaseClient) {
+        showError('reset-error', 'Authentication system not initialized.');
+        return;
+      }
+
+      const newPassword = document.getElementById('new-password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      const submitBtn = document.getElementById('reset-submit');
+      const submitText = document.getElementById('reset-submit-text');
+      const submitLoading = document.getElementById('reset-submit-loading');
+      const errorDiv = document.getElementById('reset-error');
+
+      // Validate passwords
+      if (newPassword.length < 6) {
+        showError('reset-error', 'Password must be at least 6 characters long.');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        showError('reset-error', 'Passwords do not match.');
+        return;
+      }
+
+      // Hide previous errors
+      errorDiv.style.display = 'none';
+      errorDiv.textContent = '';
+
+      // Show loading state
+      submitBtn.disabled = true;
+      submitText.style.display = 'none';
+      submitLoading.style.display = 'inline';
+
+      // Store flag that we're resetting password
+      sessionStorage.setItem("password_reset_in_progress", "true");
+
+      try {
+        // Update password
+        const { error: updateError } = await supabaseClient.auth.updateUser({
+          password: newPassword,
+        });
+
+        if (updateError) {
+          showError('reset-error', updateError.message);
+          submitBtn.disabled = false;
+          submitText.style.display = 'inline';
+          submitLoading.style.display = 'none';
+          return;
+        }
+
+        // Try to clear the must_reset_password flag via API
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session?.access_token) {
+          try {
+            const res = await fetch(`${CHATBOT_CONFIG.apiUrl}/auth/clear-password-reset-flag`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${session.access_token}`,
+              },
+              body: JSON.stringify({}),
+            });
+
+            if (!res.ok) {
+              console.warn('Failed to clear password reset flag, but password was updated');
+            }
+          } catch (apiError) {
+            console.warn('API call to clear flag failed, but password was updated:', apiError);
+          }
+        }
+
+        // Clear form and redirect
+        document.getElementById('new-password').value = '';
+        document.getElementById('confirm-password').value = '';
+        hidePasswordResetForm();
+        redirectToChatbot();
+      } catch (error) {
+        showError('reset-error', error.message || 'Failed to reset password.');
+        submitBtn.disabled = false;
+        submitText.style.display = 'inline';
+        submitLoading.style.display = 'none';
+      }
+    }
+
+    // Handle forgot password
+    async function handleForgotPassword(e) {
+      e.preventDefault();
+      
+      if (!supabaseClient) {
+        showError('forgot-error', 'Authentication system not initialized.');
+        return;
+      }
+
+      const email = document.getElementById('forgot-email').value;
+      const submitBtn = document.getElementById('forgot-submit');
+      const submitText = document.getElementById('forgot-submit-text');
+      const submitLoading = document.getElementById('forgot-submit-loading');
+      const errorDiv = document.getElementById('forgot-error');
+      const successDiv = document.getElementById('forgot-success');
+
+      // Hide previous messages
+      errorDiv.style.display = 'none';
+      errorDiv.textContent = '';
+      successDiv.style.display = 'none';
+      successDiv.textContent = '';
+
+      // Show loading state
+      submitBtn.disabled = true;
+      submitText.style.display = 'none';
+      submitLoading.style.display = 'inline';
+
+      try {
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/chatbot/reset-password/`,
+        });
+
+        if (error) {
+          showError('forgot-error', error.message);
+          submitBtn.disabled = false;
+          submitText.style.display = 'inline';
+          submitLoading.style.display = 'none';
+          return;
+        }
+
+        // Show success message
+        successDiv.style.display = 'block';
+        successDiv.textContent = 'Password reset email sent! Please check your inbox.';
+        submitBtn.disabled = false;
+        submitText.style.display = 'inline';
+        submitLoading.style.display = 'none';
+      } catch (error) {
+        showError('forgot-error', error.message || 'An error occurred.');
+        submitBtn.disabled = false;
+        submitText.style.display = 'inline';
+        submitLoading.style.display = 'none';
+      }
+    }
+
+    // UI Helper Functions
+    function showLoginForm() {
+      document.getElementById('login-form-container').style.display = 'block';
+      document.getElementById('password-reset-container').style.display = 'none';
+      document.getElementById('forgot-password-container').style.display = 'none';
+      document.getElementById('success-container').style.display = 'none';
+    }
+
+    function showPasswordResetForm() {
+      document.getElementById('login-form-container').style.display = 'none';
+      document.getElementById('password-reset-container').style.display = 'block';
+      document.getElementById('forgot-password-container').style.display = 'none';
+      document.getElementById('success-container').style.display = 'none';
+    }
+
+    function hidePasswordResetForm() {
+      document.getElementById('password-reset-container').style.display = 'none';
+      sessionStorage.removeItem("password_reset_in_progress");
+    }
+
+    function cancelPasswordReset() {
+      hidePasswordResetForm();
+      showLoginForm();
+      supabaseClient.auth.signOut();
+    }
+
+    function showForgotPassword() {
+      document.getElementById('login-form-container').style.display = 'none';
+      document.getElementById('password-reset-container').style.display = 'none';
+      document.getElementById('forgot-password-container').style.display = 'block';
+      document.getElementById('success-container').style.display = 'none';
+    }
+
+    function hideForgotPassword() {
+      document.getElementById('forgot-password-container').style.display = 'none';
+      showLoginForm();
+    }
+
+    function showError(elementId, message) {
+      const errorDiv = document.getElementById(elementId);
+      if (errorDiv) {
+        errorDiv.style.display = 'block';
+        errorDiv.textContent = message;
+      }
+    }
+
+    function redirectToChatbot() {
+      // Redirect to the chatbot portal
+      window.location.href = CHATBOT_CONFIG.redirectUrl;
+    }
   </script>
 </body>
 </html>
+
