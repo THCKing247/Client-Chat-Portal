@@ -15,27 +15,36 @@ Add the following script to your main `index.html` or create a configuration fil
   // Set these before loading the chatbot login page
   window.CHATBOT_SUPABASE_URL = 'https://your-project.supabase.co';
   window.CHATBOT_SUPABASE_ANON_KEY = 'your-anon-key-here';
-  window.CHATBOT_API_URL = 'http://localhost:8080'; // or your production API URL
-  // IMPORTANT: Set this to where your Next.js chatbot portal is running
+  window.CHATBOT_API_URL = 'https://api.apextsgroup.com'; // Your deployed API URL
+  // IMPORTANT: Set this to your deployed Next.js chatbot portal URL
   // This is the URL that will be embedded in an iframe on /chatbot/portal/
-  // Local development: 'http://localhost:3000'
-  // Production: 'https://chatbot.apextsgroup.com' or your deployment URL
-  window.CHATBOT_PORTAL_URL = 'http://localhost:3000'; // Next.js portal URL
+  // Examples: 'https://chatbot.apextsgroup.com' or your Vercel/Netlify deployment URL
+  window.CHATBOT_PORTAL_URL = 'https://chatbot.apextsgroup.com'; // Deployed Next.js portal URL
 </script>
 ```
 
 ### Important: Chatbot Portal Deployment
 
-The chatbot portal is a Next.js application located in `apex-chatbot/portal/`. You need to run it separately:
+The chatbot portal is a Next.js application located in `apex-chatbot/portal/`. It must be deployed online (not run locally):
 
-1. **Local Development**: Run `npm run dev` in `apex-chatbot/portal/` - it will be available at `http://localhost:3000`
-2. **Production Deployment**: Deploy to Vercel, Netlify, or your preferred hosting:
-   - The portal needs to be accessible at the URL you set in `CHATBOT_PORTAL_URL`
-   - Make sure the domain (e.g., `chatbot.apextsgroup.com`) is properly configured
-   - Set environment variables in your deployment platform:
+1. **Deploy to Vercel (Recommended)**:
+   - Push your code to GitHub
+   - Import the `apex-chatbot/portal/` directory as a new Vercel project
+   - Set environment variables:
      - `NEXT_PUBLIC_SUPABASE_URL`
      - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
      - `NEXT_PUBLIC_API_URL`
+   - Vercel will provide a deployment URL (e.g., `https://your-portal.vercel.app`)
+   - Optionally configure a custom domain (e.g., `chatbot.apextsgroup.com`)
+
+2. **Deploy to Netlify**:
+   - Similar process - connect GitHub repo and deploy
+   - Set the same environment variables
+   - Configure custom domain if desired
+
+3. **Update Configuration**:
+   - Set `CHATBOT_PORTAL_URL` to your deployed portal URL
+   - Make sure the portal is publicly accessible
 
 ### Session Tunnel Setup
 
@@ -113,9 +122,10 @@ Verify that `CHATBOT_REDIRECT_URL` points to your chatbot portal:
 
 ### 404 Error for chatbot portal
 
-If you see a 404 when redirecting to the chatbot portal:
-1. **Check if the portal is running**: For local development, run `npm run dev` in `apex-chatbot/portal/`
-2. **Check deployment**: If using production, verify the portal is deployed and accessible
-3. **Update redirect URL**: Make sure `CHATBOT_REDIRECT_URL` matches your actual portal URL
-4. **Domain configuration**: If using a custom domain, ensure DNS is properly configured
+If you see a 404 when loading the chatbot portal:
+1. **Verify deployment**: Check that the portal is deployed and accessible at the URL in `CHATBOT_PORTAL_URL`
+2. **Check URL configuration**: Make sure `CHATBOT_PORTAL_URL` is set correctly (no localhost URLs)
+3. **Test portal directly**: Try accessing the portal URL directly in your browser to verify it's working
+4. **Domain configuration**: If using a custom domain, ensure DNS is properly configured and pointing to your deployment
+5. **Deployment status**: Check your deployment platform (Vercel/Netlify) to ensure the deployment succeeded
 

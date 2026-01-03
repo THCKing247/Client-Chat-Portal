@@ -132,7 +132,8 @@
     const CHATBOT_CONFIG = {
       supabaseUrl: window.CHATBOT_SUPABASE_URL || 'https://your-project.supabase.co',
       supabaseAnonKey: window.CHATBOT_SUPABASE_ANON_KEY || 'your-anon-key',
-      portalUrl: window.CHATBOT_PORTAL_URL || 'http://localhost:3000' // Next.js portal URL
+      // Set this to your deployed chatbot portal URL (e.g., Vercel, Netlify, or GitHub Pages)
+      portalUrl: window.CHATBOT_PORTAL_URL || 'https://chatbot.apextsgroup.com'
     };
 
     let supabaseClient = null;
@@ -188,10 +189,20 @@
         // Note: We'll pass the token via postMessage for security
         const portalUrl = CHATBOT_CONFIG.portalUrl;
         
+        // Validate portal URL
+        if (!portalUrl || portalUrl.includes('localhost') || portalUrl.includes('127.0.0.1')) {
+          console.warn('Portal URL appears to be localhost. For production, use a deployed URL.');
+          showError('The chatbot portal URL is configured for localhost. Please configure <code>CHATBOT_PORTAL_URL</code> to point to your deployed portal (e.g., https://chatbot.apextsgroup.com)');
+          return;
+        }
+        
+        console.log('Loading chatbot portal from:', portalUrl);
+        
         // Set iframe source
+        console.log('Loading chatbot portal from:', portalUrl);
         iframe.src = portalUrl;
         iframe.style.display = 'block';
-        loadingDiv.style.display = 'none';
+        // Keep loading visible until iframe actually loads
 
         // Wait for iframe to load, then send session token
         iframe.onload = function() {
@@ -218,10 +229,42 @@
           }
         };
 
-        // Handle errors
+        // Handle errors - iframe onerror doesn't always fire, so we'll use a timeout
+        let loadTimeout = setTimeout(() => {
+          // If iframe hasn't loaded after 10 seconds, show error
+          if (iframe.style.display === 'block' && !iframe.contentWindow) {
+            loadingDiv.style.display = 'none';
+            showError('Failed to load chatbot portal from ' + portalUrl + 
+              '<br><br><strong>Possible causes:</strong><br>' +
+              '1. The portal is not deployed or not accessible at this URL<br>' +
+              '2. CORS or network connectivity issues<br>' +
+              '3. The portal URL is incorrect<br><br>' +
+              'Please verify that <code>CHATBOT_PORTAL_URL</code> points to your deployed portal.');
+          }
+        }, 10000);
+
+        iframe.onload = function() {
+          clearTimeout(loadTimeout);
+          // Check if iframe loaded successfully by trying to access contentWindow
+          try {
+            // If we can access contentWindow, it loaded (but may have errors)
+            // The portal itself will handle displaying errors
+          } catch (e) {
+            // Cross-origin or other error
+            console.warn('Iframe loaded but may have cross-origin restrictions:', e);
+          }
+        };
+
+        // Also handle network errors
         iframe.onerror = function() {
+          clearTimeout(loadTimeout);
           loadingDiv.style.display = 'none';
-          showError('Failed to load chatbot portal. Please check that the portal is running at ' + portalUrl);
+          showError('Failed to load chatbot portal from ' + portalUrl + 
+            '<br><br><strong>Common causes:</strong><br>' +
+            '1. Portal is not deployed or not accessible at this URL<br>' +
+            '2. Wrong URL configured in <code>CHATBOT_PORTAL_URL</code><br>' +
+            '3. CORS or network connectivity issues<br>' +
+            '4. Portal deployment may have failed or be down');
         };
 
       } catch (error) {
@@ -245,7 +288,11 @@
       const errorDiv = document.getElementById('portal-error');
       loadingDiv.style.display = 'none';
       errorDiv.style.display = 'block';
-      errorDiv.textContent = message;
+      errorDiv.innerHTML = message;
+      errorDiv.style.padding = '24px';
+      errorDiv.style.textAlign = 'center';
+      errorDiv.style.color = 'var(--muted)';
+      errorDiv.style.lineHeight = '1.6';
     }
 
     // Initialize on page load
