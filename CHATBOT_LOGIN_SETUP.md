@@ -16,25 +16,30 @@ Add the following script to your main `index.html` or create a configuration fil
   window.CHATBOT_SUPABASE_URL = 'https://your-project.supabase.co';
   window.CHATBOT_SUPABASE_ANON_KEY = 'your-anon-key-here';
   window.CHATBOT_API_URL = 'http://localhost:8080'; // or your production API URL
-  // IMPORTANT: Set this to where your Next.js chatbot portal is deployed
+  // IMPORTANT: Set this to where your Next.js chatbot portal is running
+  // This is the URL that will be embedded in an iframe on /chatbot/portal/
   // Local development: 'http://localhost:3000'
   // Production: 'https://chatbot.apextsgroup.com' or your deployment URL
-  window.CHATBOT_REDIRECT_URL = 'http://localhost:3000'; // Where to redirect after login
+  window.CHATBOT_PORTAL_URL = 'http://localhost:3000'; // Next.js portal URL
 </script>
 ```
 
 ### Important: Chatbot Portal Deployment
 
-The chatbot portal is a Next.js application located in `apex-chatbot/portal/`. You need to deploy it separately:
+The chatbot portal is a Next.js application located in `apex-chatbot/portal/`. You need to run it separately:
 
 1. **Local Development**: Run `npm run dev` in `apex-chatbot/portal/` - it will be available at `http://localhost:3000`
 2. **Production Deployment**: Deploy to Vercel, Netlify, or your preferred hosting:
-   - The portal needs to be accessible at the URL you set in `CHATBOT_REDIRECT_URL`
+   - The portal needs to be accessible at the URL you set in `CHATBOT_PORTAL_URL`
    - Make sure the domain (e.g., `chatbot.apextsgroup.com`) is properly configured
    - Set environment variables in your deployment platform:
      - `NEXT_PUBLIC_SUPABASE_URL`
      - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
      - `NEXT_PUBLIC_API_URL`
+
+### Session Tunnel Setup
+
+The portal is embedded in an iframe on the main site. To handle authentication, you need to update the Next.js portal to receive the session via postMessage. See `apex-chatbot/portal/SESSION_TUNNEL_SETUP.md` for detailed instructions.
 
 ### Option 2: Environment Variables (For Server-Side)
 
@@ -57,9 +62,10 @@ The chatbot login portal includes:
 
 The chatbot login is accessible from the client portal dashboard:
 
-- **Location**: `/chatbot/login/`
+- **Login Location**: `/chatbot/login/`
+- **Portal Location**: `/chatbot/portal/` (embedded chatbot portal)
 - **Linked from**: Dashboard → Your Assets → AI Chatbot → "Access Portal" button
-- **Breadcrumb**: Home → Dashboard → AI Chatbot Login
+- **Breadcrumb**: Home → Dashboard → AI Chatbot Login → Chatbot Portal
 
 ### API Endpoints Required
 
@@ -74,7 +80,9 @@ Make sure your API server (from `apex-chatbot/api`) is running and accessible at
 1. Clients access the chatbot login from their dashboard
 2. They enter their email and password
 3. If password reset is required, they'll be prompted to set a new password
-4. After successful login, they're redirected to the chatbot portal (configured via `CHATBOT_REDIRECT_URL`)
+4. After successful login, they're redirected to `/chatbot/portal/` on the main site
+5. The portal page embeds the Next.js chatbot portal in an iframe
+6. The session is passed to the embedded portal, keeping users on the main site
 
 ## Security Notes
 
